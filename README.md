@@ -49,3 +49,59 @@ docker-compose up --build
 
 # 3. Access the App
 # Open http://localhost:5000 in your browser
+```
+
+---
+
+### Option 2: Manual Python Setup
+*Prerequisite: Python 3.9+ installed.*
+
+```bash
+# 1. Create a virtual environment
+python -m venv venv
+
+# 2. Activate environment
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run the application
+python app.py
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+DeceptiScan/
+├── app.py              # Main Application Entry Point
+├── auth.py             # Authentication Routes & Logic
+├── models.py           # Database Models (User, Scenario, Score)
+├── requirements.txt    # Python Dependencies
+├── scenarios.json      # Phishing Simulation Data
+├── Dockerfile          # Container Configuration
+├── static/             # CSS, Images, JS
+│   ├── style.css
+│   └── game.js
+└── templates/          # HTML Templates
+    ├── base.html       # Master Layout
+    ├── index.html      # Landing Page
+    ├── auth/           # Login & Register Pages
+    └── game/           # Simulation Interface
+```
+
+---
+
+## 👥 Team: Binary Baniyas
+
+| Name | Role | Responsibility |
+| --- | --- | --- |
+| **Yash Singhal** | 👑 Architect | Backend Infrastructure, Database, DevOps |
+| **Aditya Mittal** | 🔐 Gatekeeper | Authentication, Security, User Management |
+| **Swapnil** | 🎮 Game Master | Simulation Logic (JS), Content Scenarios |
+| **Pranav Singal** | 🎨 Designer | UI/UX, Educational Modules, Frontend |
