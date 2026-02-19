@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "sender": "Support Team <security@paypa1-update.com>",
+    "subject": "URGENT: Your account has been suspended",
+    "body": "<p>Dear Customer,</p><p>We noticed unusual activity on your account. Please click the link below to verify your identity or your account will be permanently locked in 24 hours.</p><br><a href='#' id='phish-link' class='text-blue-600 underline font-bold'>Verify Account Now</a>",
+    "is_phish": true,
+    "explanation": "Look closely at the sender address: 'paypa1-update.com' uses a number '1' instead of an 'l'. It also uses threatening language ('permanently locked') to create a false sense of urgency."
+  },
+  {
+    "id": 2,
+    "sender": "HR Department <hr@company-internal.com>",
+    "subject": "Updated Holiday Schedule for 2026",
+    "body": "<p>Hi Team,</p><p>Please find the updated holiday schedule for this year attached to the employee portal. Let us know if you have any questions.</p><br><p>Best,<br>Human Resources</p>",
+    "is_phish": false,
+    "explanation": "This is a safe internal email. The sender domain matches the company, there is no urgent action required, and it doesn't ask for personal credentials."
+  },
+  {
+    "id": 3,
+    "sender": "IT Helpdesk <admin@it-support-portal.net>",
+    "subject": "Mandatory Software Update",
+    "body": "<p>All employees must install the latest security patch by end of day. Download the executable file below to update your system.</p><br><a href='#' id='phish-link' class='bg-blue-600 text-white px-4 py-2 rounded mt-2 inline-block'>Download Patch.exe</a>",
+    "is_phish": true,
+    "explanation": "Real IT departments usually push updates automatically. Downloading an '.exe' file directly from an email link is a classic malware delivery tactic."
+  }
+]
