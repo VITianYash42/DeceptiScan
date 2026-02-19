@@ -1,12 +1,23 @@
 from flask import Flask, render_template
+from models import db
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'binary-baniyas-secret-key'
+def create_app():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'binary-baniyas-super-secret'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///deceptiscan.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Routes
-@app.route('/')
-def home():
-    return "<h1>DeceptiScan is Running! 🚀</h1><p>Pranav, replace this with index.html</p>"
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
+    @app.route('/')
+    def home():
+        return render_template('index.html')
+
+    return app
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True, host='0.0.0.0')
