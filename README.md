@@ -100,8 +100,7 @@ DeceptiScan/
 ## 👥 Team: Binary Baniyas
 
 | Name | Role | Responsibility |
-| --- | --- | --- |
-| **Yash Singhal** | 👑 Architect | Backend Infrastructure, Database, DevOps |
-| **Aditya Mittal** | 🔐 Gatekeeper | Authentication, Security, User Management |
-| **Swapnil** | 🎮 Game Master | Simulation Logic (JS), Content Scenarios |
-| **Pranav Singal** | 🎨 Designer | UI/UX, Educational Modules, Frontend |
+| :--- | :--- | :--- |
+| **Yash Singhal** | 👑 Architect | Backend, Database, DevOps, Master Layout & Landing Page |
+| **Aditya Mittal** | 🔐 Gatekeeper | Auth Backend, Security, User Management, Auth UI |
+| **Swapnil** | 🎮 Game Master | Simulation Logic (JS), Content Scenarios, Game Interface UI |
