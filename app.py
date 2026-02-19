@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, jsonify, request
 from flask_login import LoginManager, login_required
 from models import db, User
@@ -39,6 +40,13 @@ def create_app():
 
     # --- API ENDPOINTS ---
     
+    # added so that frontend can be fetched safely
+    @app.route('/api/scenarios')
+    def get_scenarios():
+        with open('scenarios.json') as f:
+            return jsonify(json.load(f))
+
+
     @app.route('/api/update-score', methods=['POST'])
     def update_score():
         """

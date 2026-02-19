@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>DeceptiScan Inbox</h2>
+
+<div style="border:1px solid #ccc;padding:20px;width:500px">
+    <div id="email-sender"></div>
+    <h3 id="email-subject"></h3>
+    <div id="email-body"></div>
+</div>
+
+<br>
+
+<button onclick="reportEmail()">Report Email</button>
+<button onclick="nextScenario()">Next</button>
+
+<br><br>
+
+Score: <span id="score">0</span>
+
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+
+{% endblock %}
