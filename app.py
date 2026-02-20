@@ -1,7 +1,7 @@
 import json
 from flask import Flask, render_template, jsonify, request
-from flask_login import LoginManager, login_required
-from models import db, User
+from flask_login import LoginManager, login_required, current_user
+from models import db, User, Attempt
 
 def create_app():
     app = Flask(__name__)
@@ -18,7 +18,8 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        # Updated to session.get to fix the SQLAlchemy warning!
+        return db.session.get(User, int(id)) 
 
     # Register the Auth Blueprint
     from auth import auth
@@ -34,45 +35,59 @@ def create_app():
         return render_template('index.html')
 
     @app.route('/game')
-    # @login_required <-- We keep this commented out until Aditya finishes the Auth UI
+    @login_required
     def game():
         return render_template('game/inbox.html')
 
     # --- API ENDPOINTS ---
     
-    # added so that frontend can be fetched safely
     @app.route('/api/scenarios')
     def get_scenarios():
         with open('scenarios.json') as f:
             return jsonify(json.load(f))
 
-
-    @app.route('/api/update-score', methods=['POST'])
-    def update_score():
-        """
-        Frontend should send JSON: {"scenario_id": 1, "success": true}
-        """
+    @app.route('/api/process-email', methods=['POST'])
+    @login_required 
+    def save_result():
         try:
             data = request.get_json()
-            received_status = data.get('success')
+            scenario_id = data.get('scenario_id')
+            is_success = data.get('success')
+            
+            # 1. Calculate points
+            points = 100 if is_success else -50
+            
+            # 2. Update the User's total score
+            current_user.score += points
+            
+            # 3. Log this specific attempt in the database
+            new_attempt = Attempt(
+                user_id=current_user.id,
+                scenario_id=scenario_id,
+                success_bool=is_success
+            )
+            
+            # 4. Save everything to SQLite
+            db.session.add(new_attempt)
+            db.session.commit()
             
             return jsonify({
                 "status": "success",
-                "message": "Score recorded successfully.",
+                "message": "Score saved to database.",
                 "data": {
-                    "scenario_attempted": data.get('scenario_id'),
-                    "points_awarded": 100 if received_status else -50
+                    "new_total_score": current_user.score,
+                    "points_awarded": points
                 }
             }), 200
 
         except Exception as e:
+            db.session.rollback() 
             return jsonify({
                 "status": "error",
-                "message": str(e),
-                "data": None
+                "message": str(e)
             }), 400
 
-    return app # <-- Notice how all routes are ABOVE this return statement!
+    return app # <--- This is the line that went missing!
 
 if __name__ == '__main__':
     app = create_app()

@@ -1,25 +1,51 @@
-
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
+<div class="flex h-[80vh] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden mt-8">
+    
+    <div class="w-64 bg-gray-50 border-r border-gray-200 p-4 hidden md:block">
+        <button class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mb-6 shadow-sm">
+            Compose
+        </button>
+        
+        <div class="mt-auto pt-8 absolute bottom-8 w-56">
+            <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 text-center shadow-inner">
+                <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">Training Score</p>
+                <p class="text-4xl font-extrabold text-blue-400" id="score">0</p>
+            </div>
+        </div>
+    </div>
 
-<h2>DeceptiScan Inbox</h2>
+    <div class="flex-1 flex flex-col relative">
+        
+        <div class="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-50">
+            <div class="space-x-3">
+                <button onclick="reportEmail()" class="bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 px-4 py-2 rounded-md font-bold text-sm transition shadow-sm">
+                    🚩 Report Phishing
+                </button>
+            </div>
+            <button onclick="nextScenario()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md font-bold text-sm transition shadow-sm">
+                Next Email ➡️
+            </button>
+        </div>
 
-<div style="border:1px solid #ccc;padding:20px;width:500px">
-    <div id="email-sender"></div>
-    <h3 id="email-subject"></h3>
-    <div id="email-body"></div>
+        <div class="p-6 border-b border-gray-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="email-subject">Loading Subject...</h2>
+            <div class="flex items-center space-x-3">
+                <div class="h-12 w-12 bg-slate-200 rounded-full flex items-center justify-center text-2xl shadow-sm">👤</div>
+                <div>
+                    <p class="font-bold text-gray-900 text-lg" id="email-sender">Loading Sender...</p>
+                    <p class="text-sm text-gray-500">To: you@deceptiscan.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 flex-1 overflow-y-auto text-gray-800 text-lg leading-relaxed bg-white" id="email-body">
+            <p class="animate-pulse text-gray-400">Decrypting incoming transmission...</p>
+        </div>
+        
+    </div>
 </div>
 
-<br>
-
-<button onclick="reportEmail()">Report Email</button>
-<button onclick="nextScenario()">Next</button>
-
-<br><br>
-
-Score: <span id="score">0</span>
-
 <script src="{{ url_for('static', filename='game.js') }}"></script>
-
 {% endblock %}

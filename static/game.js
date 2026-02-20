@@ -78,7 +78,8 @@ async function sendResult(id, success){
 
     document.getElementById("score").innerText = score;
 
-    await fetch("/api/update-score",{
+    // CHANGED THIS URL to bypass ad-blockers
+    await fetch("/api/process-email",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
