@@ -1,16 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex flex-col items-center justify-center text-center mt-20">
-    <h1 class="text-5xl md:text-6xl font-extrabold text-slate-800 mb-6 tracking-tight">
-        Master Cyber Safety in <span class="text-blue-600">5 Minutes</span>
-    </h1>
-    <p class="text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
-        Experience real-world phishing attacks in a safe, gamified environment. Train your brain to spot the red flags before the hackers strike.
-    </p>
+<div class="flex flex-col items-center justify-center w-full mt-10 md:mt-16 px-4 relative z-10">
     
-    <a href="{{ url_for('game') }}" class="bg-blue-600 text-white text-xl font-bold py-4 px-8 rounded-lg shadow-xl hover:bg-blue-500 transform hover:-translate-y-1 transition duration-300">
-        Start Simulation 🎮
-    </a>
+    <div class="absolute top-0 left-10 w-64 h-64 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float z-0 pointer-events-none"></div>
+    <div class="absolute top-40 right-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float z-0 pointer-events-none" style="animation-delay: 2s;"></div>
+
+    <div class="text-center relative z-10 max-w-4xl mx-auto">
+        
+        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/60 border border-accent text-primary font-bold text-sm mb-8 animate-slide-up backdrop-blur-sm shadow-sm transform hover:scale-105 transition-transform cursor-default">
+            <span class="animate-pulse text-red-500">🔴</span> Cyber Carnival 2026 | Phase 2 Prototype
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold text-primary mb-6 tracking-tight animate-slide-up" style="animation-delay: 0.1s; opacity: 0;">
+            Don't just read about phishing.<br/>
+            <span class="text-secondary inline-block mt-4 transform hover:scale-105 hover:text-primary transition-all duration-500 will-change-transform drop-shadow-sm">Experience it.</span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-primary/80 mb-10 max-w-3xl mx-auto leading-relaxed animate-slide-up font-medium" style="animation-delay: 0.2s; opacity: 0;">
+            DeceptiScan is an interactive cybersecurity platform. Step into our simulation engine, spot the red flags in real-world emails, and train your instincts before hackers strike.
+        </p>
+        
+        <a href="{{ url_for('game') }}" class="group relative inline-flex bg-primary text-background text-xl font-bold py-4 px-10 rounded-full shadow-2xl hover:bg-secondary transform hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(138,118,80,0.4)] transition-all duration-300 animate-slide-up" style="animation-delay: 0.3s; opacity: 0;">
+            <span class="relative z-10 flex items-center gap-3 tracking-wide">
+                Start Simulation 
+                <span class="group-hover:rotate-12 transition-transform duration-300 inline-block text-2xl">🎮</span>
+            </span>
+            <div class="absolute inset-0 h-full w-full rounded-full border-4 border-secondary scale-105 opacity-0 group-hover:scale-110 group-hover:opacity-40 transition-all duration-700 pointer-events-none"></div>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 w-full relative z-10">
+        
+        <div class="glass-panel p-8 rounded-3xl shadow-lg hover:shadow-2xl border border-accent/50 hover:border-secondary hover:bg-white/90 transform hover:-translate-y-3 transition-all duration-500 animate-slide-up group cursor-default" style="animation-delay: 0.4s; opacity: 0;">
+            <div class="w-16 h-16 bg-background rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border border-accent group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">📧</div>
+            <h3 class="text-2xl font-bold text-primary mb-3">Realistic Engine</h3>
+            <p class="text-primary/80 font-medium leading-relaxed">
+                Test yourself in a familiar environment mimicking popular email clients. No boring static blogs, just immersive real-world scenarios.
+            </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl shadow-lg hover:shadow-2xl border border-accent/50 hover:border-secondary hover:bg-white/90 transform hover:-translate-y-3 transition-all duration-500 animate-slide-up group cursor-default" style="animation-delay: 0.5s; opacity: 0;">
+            <div class="w-16 h-16 bg-background rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border border-accent group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">📊</div>
+            <h3 class="text-2xl font-bold text-primary mb-3">Gamified Scoring</h3>
+            <p class="text-primary/80 font-medium leading-relaxed">
+                Earn points for accurately reporting threats, but lose points if you fall for the bait. Track your vulnerability score over time.
+            </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl shadow-lg hover:shadow-2xl border border-accent/50 hover:border-secondary hover:bg-white/90 transform hover:-translate-y-3 transition-all duration-500 animate-slide-up group cursor-default" style="animation-delay: 0.6s; opacity: 0;">
+            <div class="w-16 h-16 bg-background rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border border-accent group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🎓</div>
+            <h3 class="text-2xl font-bold text-primary mb-3">Instant Feedback</h3>
+            <p class="text-primary/80 font-medium leading-relaxed">
+                Receive instant "You Got Phished!" analysis breakdowns explaining exactly why an email was dangerous and the tactics used.
+            </p>
+        </div>
+
+    </div>
+    
+    <div class="mt-20 mb-10 w-full max-w-3xl glass-panel p-8 md:p-10 rounded-3xl shadow-lg border border-accent text-center relative overflow-hidden animate-slide-up group cursor-default" style="animation-delay: 0.7s; opacity: 0;">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-150%] group-hover:animate-[shimmer_1.5s_ease-in-out]"></div>
+        
+        <h2 class="text-3xl font-extrabold text-primary mb-2 relative z-10 flex items-center justify-center gap-3">
+            Built by <span class="text-secondary bg-white/50 px-4 py-1 rounded-lg border border-accent shadow-sm">Binary Baniyas</span>
+        </h2>
+        <p class="text-primary/70 font-bold text-lg relative z-10 mt-3 tracking-wide">Are your digital instincts sharp enough?</p>
+    </div>
 </div>
+
+<style>
+/* Custom keyframe for the shimmering glass effect on the bottom banner */
+@keyframes shimmer {
+    100% { transform: translateX(150%); }
+}
+</style>
 {% endblock %}
