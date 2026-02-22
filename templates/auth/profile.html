@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-16 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+    <div class="bg-slate-900 px-8 py-10 text-center">
+        <div class="h-24 w-24 bg-blue-500 rounded-full mx-auto flex items-center justify-center text-4xl text-white shadow-lg border-4 border-slate-800 mb-4 font-bold">
+            {{ current_user.username[0]|upper }}
+        </div>
+        <h2 class="text-3xl font-extrabold text-white">{{ current_user.username }}</h2>
+        <p class="text-blue-300 mt-1">{{ current_user.email }}</p>
+    </div>
+    
+    <div class="p-8">
+        <div class="flex items-center justify-between bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm">
+            <div>
+                <h3 class="text-lg font-bold text-gray-800">Vulnerability Score</h3>
+                <p class="text-sm text-gray-500 mt-1">Your total points from phishing simulations.</p>
+            </div>
+            <div class="text-4xl font-black text-blue-600">
+                {{ current_user.score }}
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-center space-x-4">
+            <a href="{{ url_for('game') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-500 transition shadow-md">
+                Play Simulation
+            </a>
+            <a href="{{ url_for('auth.logout') }}" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition border border-gray-300 shadow-sm">
+                Log Out
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

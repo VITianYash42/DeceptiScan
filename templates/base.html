@@ -14,7 +14,9 @@
             <a href="{{ url_for('home') }}" class="text-2xl font-bold tracking-wider">🛡️ DeceptiScan</a>
             <div class="space-x-4 flex items-center">
                 {% if current_user.is_authenticated %}
-                    <span class="text-gray-300 mr-4">Welcome, <strong class="text-white">{{ current_user.username }}</strong>!</span>
+                    <a href="{{ url_for('auth.profile') }}" class="text-gray-300 mr-4 hover:text-white transition cursor-pointer">
+                        Welcome, <strong class="text-white">{{ current_user.username }}</strong>!
+                    </a>
                     <a href="{{ url_for('auth.logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-500 transition shadow-sm">Logout</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}" class="hover:text-blue-400 transition text-white">Login</a>
