@@ -1,49 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex h-[80vh] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden mt-8">
+<div class="flex h-[calc(100vh-12rem)] min-h-[500px] bg-background/50 rounded-2xl shadow-[0_20px_50px_rgba(138,118,80,0.2)] border border-accent overflow-hidden mt-8 animate-slide-up backdrop-blur-md relative z-10">
     
-    <div class="w-64 bg-gray-50 border-r border-gray-200 p-4 hidden md:block">
-        <button class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mb-6 shadow-sm">
+    <div class="w-64 bg-accent/20 border-r border-accent p-6 hidden md:flex flex-col animate-slide-in-right relative overflow-hidden">
+        <button class="w-full bg-primary text-background font-bold py-3 px-4 rounded-xl mb-6 shadow-md hover:shadow-[0_8px_15px_rgba(138,118,80,0.3)] hover:bg-secondary transform hover:-translate-y-1 transition-all duration-300 z-10 flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             Compose
         </button>
         
-        <div class="mt-auto pt-8 absolute bottom-8 w-56">
-            <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 text-center shadow-inner">
-                <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">Training Score</p>
-                <p class="text-4xl font-extrabold text-blue-400" id="score">0</p>
+        <div class="mt-auto absolute bottom-6 w-[calc(100%-3rem)] z-10">
+            <div class="p-5 bg-primary rounded-xl border-2 border-secondary text-center shadow-inner transform transition hover:scale-105 duration-300">
+                <p class="text-xs text-accent uppercase tracking-widest font-bold mb-2">Training Score</p>
+                <p class="text-5xl font-extrabold text-background drop-shadow-md transition-all duration-500" id="score">0</p>
             </div>
         </div>
+        
+        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary rounded-full opacity-20 filter blur-3xl pointer-events-none"></div>
     </div>
 
-    <div class="flex-1 flex flex-col relative">
+    <div class="flex-1 flex flex-col relative bg-white/40">
         
-        <div class="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-50">
+        <div class="flex justify-between items-center p-4 border-b border-accent bg-background/30 backdrop-blur-sm z-10">
             <div class="space-x-3">
-                <button onclick="reportEmail()" class="bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 px-4 py-2 rounded-md font-bold text-sm transition shadow-sm">
-                    🚩 Report Phishing
+                <button onclick="reportEmail()" class="group bg-primary text-background border-2 border-transparent hover:border-primary hover:bg-transparent hover:text-primary px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2">
+                    <span class="group-hover:scale-125 transition-transform duration-300">🚩</span> Report Phishing
                 </button>
             </div>
-            <button onclick="nextScenario()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md font-bold text-sm transition shadow-sm">
-                Next Email ➡️
+            <button onclick="nextScenario()" class="group bg-secondary hover:bg-primary text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2 transform hover:translate-x-1">
+                Next Email <span class="group-hover:translate-x-1 transition-transform duration-300">➡️</span>
             </button>
         </div>
 
-        <div class="p-6 border-b border-gray-100">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="email-subject">Loading Subject...</h2>
-            <div class="flex items-center space-x-3">
-                <div class="h-12 w-12 bg-slate-200 rounded-full flex items-center justify-center text-2xl shadow-sm">👤</div>
+        <div class="p-6 border-b border-accent/50 bg-white/60 animate-fade-in" style="animation-delay: 0.2s; opacity: 0;">
+            <h2 class="text-3xl font-bold text-primary mb-4 tracking-tight" id="email-subject">Loading Subject...</h2>
+            <div class="flex items-center space-x-4">
+                <div class="h-14 w-14 bg-accent text-primary rounded-full flex items-center justify-center text-3xl shadow-md border-2 border-secondary transform transition hover:rotate-12 duration-300">👤</div>
                 <div>
-                    <p class="font-bold text-gray-900 text-lg" id="email-sender">Loading Sender...</p>
-                    <p class="text-sm text-gray-500">To: you@deceptiscan.com</p>
+                    <p class="font-bold text-primary text-xl" id="email-sender">Loading Sender...</p>
+                    <p class="text-sm text-secondary font-bold tracking-wide">To: you@deceptiscan.com</p>
                 </div>
             </div>
         </div>
 
-        <div class="p-8 flex-1 overflow-y-auto text-gray-800 text-lg leading-relaxed bg-white" id="email-body">
-            <p class="animate-pulse text-gray-400">Decrypting incoming transmission...</p>
+        <div class="p-8 flex-1 overflow-y-auto text-primary/90 text-lg leading-relaxed bg-white/70 animate-fade-in" id="email-body" style="animation-delay: 0.4s; opacity: 0;">
+            <div class="flex items-center justify-center h-full">
+                <p class="animate-pulse-slow text-secondary font-bold tracking-wide flex items-center gap-3">
+                    <svg class="animate-spin h-6 w-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    Decrypting incoming transmission...
+                </p>
+            </div>
         </div>
-        
     </div>
 </div>
 

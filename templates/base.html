@@ -5,32 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeceptiScan | Cyber Carnival</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8A7650',    /* Brown/Gold */
+                        secondary: '#8E977D',  /* Sage Green */
+                        background: '#ECE7D1', /* Light Beige */
+                        accent: '#DBCEA5',     /* Tan/Khaki */
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Prevent layout flashing before Tailwind loads */
+        html { visibility: hidden; }
+        html.tailwind-loaded { visibility: visible; }
+
+        /* Custom UI Enhancements */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #ECE7D1; }
+        ::-webkit-scrollbar-thumb { background: #DBCEA5; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8E977D; }
+        
+        .glass-panel {
+            background: rgba(236, 231, 209, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(219, 206, 165, 0.6);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col font-sans">
+<body class="bg-background min-h-screen flex flex-col font-sans text-primary transition-colors duration-500 overflow-x-hidden">
     
-    <nav class="bg-slate-900 text-white p-4 shadow-lg">
+    <nav class="bg-primary text-background p-4 shadow-xl sticky top-0 z-50 animate-fade-in border-b-4 border-secondary/50">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="{{ url_for('home') }}" class="text-2xl font-bold tracking-wider">🛡️ DeceptiScan</a>
+            <a href="{{ url_for('home') }}" class="text-2xl font-bold tracking-wider hover:text-accent transition duration-300 transform hover:scale-105 inline-block">
+                🛡️ DeceptiScan
+            </a>
             <div class="space-x-4 flex items-center">
                 {% if current_user.is_authenticated %}
-                    <span class="text-gray-300 mr-4">Welcome, <strong class="text-white">{{ current_user.username }}</strong>!</span>
-                    <a href="{{ url_for('auth.logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-500 transition shadow-sm">Logout</a>
+                    <a href="{{ url_for('auth.profile') }}" class="text-accent mr-4 font-medium tracking-wide hover:text-white transition-colors duration-300">
+                        Welcome, <strong class="text-white border-b-2 border-transparent hover:border-secondary pb-0.5">{{ current_user.username }}</strong>!
+                    </a>
+                    <a href="{{ url_for('auth.logout') }}" class="bg-secondary text-white px-5 py-2 rounded-lg font-bold hover:bg-opacity-80 transition duration-300 shadow-md hover:shadow-[0_4px_12px_rgba(142,151,125,0.5)] transform hover:-translate-y-0.5">Logout</a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="hover:text-blue-400 transition text-white">Login</a>
-                    <a href="{{ url_for('auth.register') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-500 transition shadow-sm">Sign Up</a>
+                    <a href="{{ url_for('auth.login') }}" class="hover:text-accent transition duration-300 font-bold tracking-wide">Login</a>
+                    <a href="{{ url_for('auth.register') }}" class="bg-secondary text-white px-5 py-2 rounded-lg font-bold hover:bg-opacity-90 transition duration-300 shadow-md hover:shadow-[0_4px_12px_rgba(142,151,125,0.5)] transform hover:-translate-y-0.5">Sign Up</a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow container mx-auto p-4 w-full max-w-7xl">
+    <main class="flex-grow container mx-auto p-4 w-full max-w-7xl relative">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-slate-900 text-gray-400 text-center p-4 mt-auto">
-        <p>&copy; 2026 Binary Baniyas - Cyber Carnival Hackathon Phase 2</p>
+    <footer class="bg-primary text-accent text-center p-6 mt-auto border-t-4 border-secondary shadow-inner animate-fade-in">
+        <p class="hover:text-background transition duration-300 font-medium tracking-wide">&copy; 2026 Binary Baniyas - Cyber Carnival Hackathon Phase 2</p>
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.documentElement.classList.add('tailwind-loaded');
+        });
+    </script>
 </body>
 </html>

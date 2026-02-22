@@ -54,3 +54,11 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+
+@auth.route('/profile')
+@login_required
+def profile():
+    # current_user is automatically available in the template via Flask-Login
+    return render_template('auth/profile.html')
