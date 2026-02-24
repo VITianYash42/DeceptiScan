@@ -124,7 +124,7 @@ def create_app():
         db.session.commit()
         return "Hackathon magic complete! 🪄 Fake users added. Go check your leaderboard."
 
-    return app # <--- This is the line that went missing!
+    return app
 
 if __name__ == '__main__':
     app = create_app()

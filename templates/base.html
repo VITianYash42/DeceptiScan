@@ -108,7 +108,7 @@
                 </a>
                 
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.profile') }}" class="text-accent mr-4 font-medium tracking-wide hover:text-white transition-colors duration-300">
+                    <a href="{{ url_for('auth.profile') }}" class="text-accent mr-4 font-medium tracking-wide hover:text-white transition-colors duration-300 cursor-pointer">
                         Welcome, <strong class="text-white border-b-2 border-transparent hover:border-secondary pb-0.5">{{ current_user.username }}</strong>!
                     </a>
                     <a href="{{ url_for('auth.logout') }}" class="bg-secondary text-white px-5 py-2 rounded-lg font-bold hover:bg-opacity-80 transition duration-300 shadow-md hover:shadow-[0_4px_12px_rgba(142,151,125,0.5)] transform hover:-translate-y-0.5">Logout</a>

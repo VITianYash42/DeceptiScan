@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div id="coming-soon-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-background/80 backdrop-blur-sm transition-opacity">
+    <div class="glass-panel p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center border-2 border-secondary animate-slide-up mx-4">
+        <div class="text-5xl mb-4 animate-bounce">🚧</div>
+        <h3 class="text-2xl font-black text-primary mb-2" id="modal-title">Feature Blocked</h3>
+        <p class="text-primary/80 font-medium mb-8 leading-relaxed">The <strong id="modal-feature-name" class="text-secondary"></strong> feature is currently locked. It will be released in Phase 3 of the Cyber Carnival.</p>
+        <button onclick="document.getElementById('coming-soon-modal').classList.add('hidden')" class="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-secondary transition-all w-full shadow-lg transform hover:-translate-y-1">Understood</button>
+    </div>
+</div>
+
+<script>
+function showComingSoon(featureName) {
+    document.getElementById('modal-feature-name').innerText = featureName;
+    document.getElementById('coming-soon-modal').classList.remove('hidden');
+    document.getElementById('coming-soon-modal').classList.add('flex');
+}
+</script>
+
 <div class="max-w-4xl mx-auto mt-12 mb-12 animate-slide-up relative z-10">
     
     <div class="glass-panel p-8 md:p-12 rounded-3xl shadow-[0_15px_40px_rgba(138,118,80,0.2)] relative overflow-hidden border border-accent/50 mb-8">
@@ -35,8 +52,23 @@
         </div>
     </div>
 
+    <div class="glass-panel p-8 rounded-3xl shadow-lg border border-accent/50 relative overflow-hidden mb-8 z-10">
+        <h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+            <span class="text-2xl">📊</span> Activity History
+        </h3>
+        <div class="grid grid-cols-2 gap-6">
+            <div class="bg-green-50/70 p-6 rounded-2xl border border-green-200/50 text-center shadow-sm transform hover:-translate-y-1 transition-all duration-300">
+                <p class="text-green-700 font-bold text-sm uppercase tracking-wide mb-2">Threats Caught</p>
+                <p class="text-5xl font-extrabold text-green-600 drop-shadow-sm">{{ successful_catches }}</p>
+            </div>
+            <div class="bg-red-50/70 p-6 rounded-2xl border border-red-200/50 text-center shadow-sm transform hover:-translate-y-1 transition-all duration-300">
+                <p class="text-red-700 font-bold text-sm uppercase tracking-wide mb-2">Phished (Errors)</p>
+                <p class="text-5xl font-extrabold text-red-600 drop-shadow-sm">{{ failed_clicks }}</p>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-        
         <div class="glass-panel p-8 rounded-3xl shadow-lg border border-accent/50 relative overflow-hidden group hover:border-secondary/50 transition-colors duration-300">
             <h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
                 <span class="text-2xl group-hover:animate-bounce">🎮</span> Training Hub
@@ -54,17 +86,16 @@
                 <span class="text-2xl">🔐</span> Account Settings
             </h3>
             <div class="space-y-4">
-                <button class="w-full flex items-center justify-between p-4 bg-white/50 rounded-xl border border-accent hover:border-secondary hover:bg-white/80 transition-all duration-300 group">
+                <button onclick="showComingSoon('Change Password')" class="w-full flex items-center justify-between p-4 bg-white/50 rounded-xl border border-accent hover:border-secondary hover:bg-white/80 transition-all duration-300 group">
                     <span class="font-bold text-primary tracking-wide">Change Password</span>
                     <span class="text-secondary group-hover:translate-x-2 transition-transform duration-300 font-bold">→</span>
                 </button>
-                <button class="w-full flex items-center justify-between p-4 bg-white/50 rounded-xl border border-accent hover:border-secondary hover:bg-white/80 transition-all duration-300 group">
+                <button onclick="showComingSoon('Reset Score')" class="w-full flex items-center justify-between p-4 bg-white/50 rounded-xl border border-accent hover:border-secondary hover:bg-white/80 transition-all duration-300 group">
                     <span class="font-bold text-primary tracking-wide">Reset Score</span>
                     <span class="text-secondary group-hover:rotate-180 transition-transform duration-500 font-bold">↻</span>
                 </button>
             </div>
         </div>
-        
     </div>
 </div>
 {% endblock %}

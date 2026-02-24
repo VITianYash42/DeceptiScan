@@ -7,6 +7,42 @@
         <p class="text-xl text-secondary">The top Cyber Ninjas in the simulation.</p>
     </div>
 
+    {% if top_users %}
+    <div class="flex flex-col md:flex-row justify-center items-end gap-4 md:gap-8 mb-12 h-64 border-b-2 border-accent/40 pb-4">
+        {% if top_users|length > 1 %}
+        <div class="flex flex-col items-center w-28 md:w-36 animate-slide-up" style="animation-delay: 0.1s;">
+            <div class="h-16 w-16 bg-white/80 text-secondary rounded-full flex items-center justify-center font-extrabold text-2xl shadow-lg border-4 border-gray-300 mb-[-20px] z-10">{{ top_users[1].username[0]|upper }}</div>
+            <div class="bg-gradient-to-t from-gray-300 to-gray-100 w-full h-32 rounded-t-lg border-t-4 border-gray-400 shadow-lg flex flex-col justify-end pb-4 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                <span class="text-gray-600 font-bold text-2xl">🥈</span>
+                <span class="text-primary font-bold text-sm truncate w-full px-2 mt-1">{{ top_users[1].username }}</span>
+                <span class="text-secondary font-extrabold">{{ top_users[1].score }}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col items-center w-32 md:w-40 animate-slide-up z-10">
+            <div class="text-4xl mb-2 animate-bounce">👑</div>
+            <div class="h-20 w-20 bg-primary text-white rounded-full flex items-center justify-center font-extrabold text-3xl shadow-xl border-4 border-yellow-400 mb-[-25px] z-10">{{ top_users[0].username[0]|upper }}</div>
+            <div class="bg-gradient-to-t from-yellow-300 to-yellow-100 w-full h-40 rounded-t-lg border-t-4 border-yellow-500 shadow-xl flex flex-col justify-end pb-4 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                <span class="text-yellow-700 font-bold text-2xl">🥇</span>
+                <span class="text-primary font-extrabold text-base truncate w-full px-2 mt-1">{{ top_users[0].username }}</span>
+                <span class="text-secondary font-black text-lg">{{ top_users[0].score }}</span>
+            </div>
+        </div>
+
+        {% if top_users|length > 2 %}
+        <div class="flex flex-col items-center w-28 md:w-36 animate-slide-up" style="animation-delay: 0.2s;">
+            <div class="h-16 w-16 bg-white/80 text-secondary rounded-full flex items-center justify-center font-extrabold text-2xl shadow-lg border-4 border-orange-300 mb-[-20px] z-10">{{ top_users[2].username[0]|upper }}</div>
+            <div class="bg-gradient-to-t from-orange-300 to-orange-100 w-full h-24 rounded-t-lg border-t-4 border-orange-400 shadow-lg flex flex-col justify-end pb-4 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                <span class="text-orange-700 font-bold text-2xl">🥉</span>
+                <span class="text-primary font-bold text-sm truncate w-full px-2 mt-1">{{ top_users[2].username }}</span>
+                <span class="text-secondary font-extrabold">{{ top_users[2].score }}</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
     <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
