@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-12 animate-fade-in">
+    <div class="text-center mb-10">
+        <h1 class="text-5xl font-extrabold text-primary mb-4 tracking-tight">Global Leaderboard 🏆</h1>
+        <p class="text-xl text-secondary">The top Cyber Ninjas in the simulation.</p>
+    </div>
+
+    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-primary text-background border-b-4 border-secondary/50">
+                    <th class="p-5 text-xl font-bold w-24 text-center">Rank</th>
+                    <th class="p-5 text-xl font-bold">Operative</th>
+                    <th class="p-5 text-xl font-bold text-right w-48">Score</th>
+                </tr>
+            </thead>
+            <tbody class="text-primary font-medium text-lg">
+                {% for user in top_users %}
+                <tr class="border-b border-accent/30 hover:bg-white/40 transition duration-200">
+                    <td class="p-5 text-center font-bold text-2xl">
+                        {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index == 3 %}🥉{% else %}<span class="text-secondary">#{{ loop.index }}</span>{% endif %}
+                    </td>
+                    <td class="p-5 flex items-center gap-3">
+                        <div class="h-10 w-10 bg-secondary text-white rounded-full flex items-center justify-center font-bold text-xl shadow-sm">
+                            {{ user.username[0]|upper }}
+                        </div>
+                        {{ user.username }}
+                    </td>
+                    <td class="p-5 text-right font-extrabold text-2xl text-secondary">
+                        {{ user.score }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="p-8 text-center text-secondary italic">No operatives on the board yet. Be the first!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

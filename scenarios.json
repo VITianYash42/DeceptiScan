@@ -22,5 +22,61 @@
     "body": "<p>All employees must install the latest security patch by end of day. Download the executable file below to update your system.</p><br><a href='#' id='phish-link' class='bg-blue-600 text-white px-4 py-2 rounded mt-2 inline-block'>Download Patch.exe</a>",
     "is_phish": true,
     "explanation": "Real IT departments usually push updates automatically. Downloading an '.exe' file directly from an email link is a classic malware delivery tactic."
+  },
+  {
+    "id": 4,
+    "sender": "Zoom Video Communications <no-reply@zoom-meeting-invites.com>",
+    "subject": "Missed Meeting Recording: Q1 Strategy Review",
+    "body": "<p>Hello,</p><p>You missed a mandatory team meeting earlier today. The host has shared the recording with you. Please log in with your corporate credentials to view the video file.</p><br><a href='#' id='phish-link' class='bg-blue-500 text-white px-4 py-2 rounded mt-2 inline-block'>View Recording</a>",
+    "is_phish": true,
+    "explanation": "This is a credential harvesting attack. The sender domain 'zoom-meeting-invites.com' is fake (real is zoom.us), and it tries to force you to enter your corporate password on a fake login page."
+  },
+  {
+    "id": 5,
+    "sender": "Sarah Jenkins <s.jenkins@company-internal.com>",
+    "subject": "Lunch today?",
+    "body": "<p>Hey!</p><p>Are you free for lunch today? A few of us from the marketing team are heading to that new sandwich place down the street at 12:30. Let me know if you want to tag along!</p><br><p>- Sarah</p>",
+    "is_phish": false,
+    "explanation": "This is a completely safe, casual email from a coworker. No links, no attachments, and no urgency."
+  },
+  {
+    "id": 6,
+    "sender": "Netflix Billing <support@netfIix-billing.com>",
+    "subject": "Payment Declined - Update Your Payment Method",
+    "body": "<p>Hi there,</p><p>We were unable to process the payment for your latest billing cycle. To avoid service interruption, please update your credit card information immediately.</p><br><a href='#' id='phish-link' class='bg-red-600 text-white px-4 py-2 rounded mt-2 inline-block'>Update Payment Info</a>",
+    "is_phish": true,
+    "explanation": "A classic consumer phishing scam. Look at the sender email: 'netfIix' uses an uppercase 'I' instead of a lowercase 'l'. It preys on the fear of losing a service to steal credit card data."
+  },
+  {
+    "id": 7,
+    "sender": "CEO Office <executive-team@company-internal.com>",
+    "subject": "CONFIDENTIAL: Company Restructuring",
+    "body": "<p>Dear Employee,</p><p>Due to recent market shifts, we are announcing a company-wide restructuring. Please review the attached secure document to see how your department is affected. You will need your employee login to decrypt the file.</p><br><a href='#' id='phish-link' class='text-blue-600 underline font-bold'>View Restructuring_Plan.pdf</a>",
+    "is_phish": true,
+    "explanation": "This is a highly targeted 'Spear Phishing' attack. It uses extreme emotional manipulation (fear of layoffs) to trick employees into ignoring red flags and giving up their passwords."
+  },
+  {
+    "id": 8,
+    "sender": "Google Workspace <alerts@google.com>",
+    "subject": "New sign-in from Mac OS",
+    "body": "<p>Your Google Account was just signed in to from a new Mac OS device in Russia. If you did not authorize this login, please ignore this email. If you wish to secure your account, review your devices.</p><br><p>The Google Workspace Team</p>",
+    "is_phish": false,
+    "explanation": "This is a real security alert. The sender domain is genuinely '@google.com', and it specifically tells you *not* to take action if you didn't do it, rather than forcing you to click a link."
+  },
+  {
+    "id": 9,
+    "sender": "Amazon Orders <auto-confirm@amzn-orders-update.com>",
+    "subject": "Your Order #114-893201-492 is arriving today!",
+    "body": "<p>Great news!</p><p>Your package is out for delivery. However, there is a $2.99 unpaid shipping fee. Please pay the outstanding balance to ensure the driver can drop off your package today.</p><br><a href='#' id='phish-link' class='bg-yellow-400 text-black px-4 py-2 rounded mt-2 inline-block'>Pay Shipping Fee</a>",
+    "is_phish": true,
+    "explanation": "Amazon never holds packages hostage for a random $2.99 fee. The domain 'amzn-orders-update.com' is a fake domain meant to steal your credit card details for a tiny, believable amount."
+  },
+  {
+    "id": 10,
+    "sender": "Project Management <notifications@asana.com>",
+    "subject": "David assigned you a new task",
+    "body": "<p><strong>David Chen</strong> assigned a task to you:</p><p><em>'Review Q2 Marketing Assets'</em></p><p>Due Date: Next Friday.</p><br><p>Log into Asana to view the attached files and begin reviewing.</p>",
+    "is_phish": false,
+    "explanation": "This is a safe notification from a real productivity tool. The sender domain is correct, and the context makes sense for a daily workflow."
   }
 ]
