@@ -33,6 +33,12 @@ def create_app():
     @app.route('/')
     def home():
         return render_template('index.html')
+    
+    @app.route('/leaderboard')
+    def leaderboard():
+        # Fetch the top 10 users sorted by score in descending order
+        top_users = User.query.order_by(User.score.desc()).limit(10).all()
+        return render_template('leaderboard.html', top_users=top_users)
 
     @app.route('/game')
     @login_required
@@ -86,8 +92,39 @@ def create_app():
                 "status": "error",
                 "message": str(e)
             }), 400
+        
+    @app.route('/seed-leaderboard')
+    def seed_leaderboard():
+        from werkzeug.security import generate_password_hash
+        
+        # A list of fake hackathon users and scores
+        fake_users = [
+            ("CyberNinja99", 950),
+            ("PhishHunter", 820),
+            ("SecOps_Dave", 710),
+            ("FirewallFrank", 600),
+            ("ZeroTrust_Zoe", 550),
+            ("ScamBuster", 880),
+            ("NoobMaster", 120),
+            ("ByteMe", 430),
+            ("ClickHappy", -150)
+        ]
+        
+        for username, score in fake_users:
+            # Only add them if they don't already exist
+            if not User.query.filter_by(username=username).first():
+                user = User(
+                    username=username,
+                    email=f"{username.lower()}@demo.com",
+                    password_hash=generate_password_hash("password123"),
+                    score=score
+                )
+                db.session.add(user)
+                
+        db.session.commit()
+        return "Hackathon magic complete! 🪄 Fake users added. Go check your leaderboard."
 
-    return app # <--- This is the line that went missing!
+    return app
 
 if __name__ == '__main__':
     app = create_app()

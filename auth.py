@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
-from models import db, User
+from flask_login import login_user, logout_user, login_required, current_user
+from models import db, User, Attempt
 
-# THIS IS THE EXACT LINE PYTHON IS LOOKING FOR:
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -55,10 +54,17 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-
-
 @auth.route('/profile')
 @login_required
 def profile():
-    # current_user is automatically available in the template via Flask-Login
-    return render_template('auth/profile.html')
+    # Fetch all attempts for the current logged-in user
+    user_attempts = Attempt.query.filter_by(user_id=current_user.id).all()
+    
+    # Calculate successful catches and failed clicks
+    successful_catches = sum(1 for attempt in user_attempts if attempt.success_bool)
+    failed_clicks = sum(1 for attempt in user_attempts if not attempt.success_bool)
+
+    # Pass the calculated stats to the profile template
+    return render_template('auth/profile.html', 
+                           successful_catches=successful_catches, 
+                           failed_clicks=failed_clicks)

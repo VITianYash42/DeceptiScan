@@ -2,108 +2,139 @@ let scenarios = [];
 let currentScenarioIndex = 0;
 let score = 0;
 
-
-// LOAD ALL SCENARIOS
 async function loadScenarios() {
-
     try {
-
         const response = await fetch('/api/scenarios');
         scenarios = await response.json();
-
+        
+        // Fetch current score from DOM if passed (defaults to 0 if not set)
+        const scoreElement = document.getElementById("score");
+        if(scoreElement && parseInt(scoreElement.innerText)) {
+            score = parseInt(scoreElement.innerText);
+        }
+        
         displayScenario(scenarios[currentScenarioIndex]);
-
     } catch (error) {
         console.error("Error loading scenarios:", error);
     }
 }
 
-
-// SHOW EMAIL ON SCREEN
 function displayScenario(scenario) {
-
     document.getElementById('email-sender').innerText = scenario.sender;
     document.getElementById('email-subject').innerText = scenario.subject;
     document.getElementById('email-body').innerHTML = scenario.body;
 
-    // attach link click if phishing link exists
     const link = document.querySelector("#phish-link");
-
     if(link){
         link.onclick = function(){
             clickLink(scenario);
-            return false;
+            return false; // Prevent actual navigation
         };
     }
 }
 
+// Visual Feedback Engine
+function showFeedbackOverlay(isSuccess, points, explanation, isPhish) {
+    const overlay = document.getElementById('feedback-overlay');
+    const card = document.getElementById('feedback-card');
+    const icon = document.getElementById('feedback-icon');
+    const title = document.getElementById('feedback-title');
+    const message = document.getElementById('feedback-message');
+    const scoreChange = document.getElementById('feedback-score-change');
+    const nextBtn = document.getElementById('feedback-next-btn');
+    const finishBtn = document.getElementById('feedback-finish-btn');
 
-// USER CLICKED EMAIL LINK
-function clickLink(scenario){
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    void overlay.offsetWidth; // Force DOM reflow
+    card.classList.remove('scale-90');
+    card.classList.add('scale-100');
 
-    let success = !scenario.is_phish;
-
-    if(scenario.is_phish){
-        score -= 50;
-        alert("❌ You clicked phishing link (-50)");
+    if (isSuccess) {
+        card.className = "glass-panel p-10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.3)] max-w-lg w-full text-center border-4 border-green-500 bg-green-50/90 transform transition-transform duration-500 scale-100 mx-4 relative overflow-hidden";
+        icon.innerHTML = isPhish ? "🎣🛡️" : "✅";
+        title.innerHTML = isPhish ? "Phishing Attempt Blocked!" : "Safe Email Confirmed!";
+        title.className = "text-3xl font-black mb-4 tracking-tight text-green-700 drop-shadow-sm";
+        scoreChange.innerHTML = `<span class="text-green-800 bg-green-200/80 border border-green-400 px-5 py-2 rounded-xl inline-block shadow-sm">Score ${points}</span>`;
+        playAudio('success');
     } else {
-        alert("✔ Safe link");
+        card.className = "glass-panel p-10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.3)] max-w-lg w-full text-center border-4 border-red-500 bg-red-50/90 transform transition-transform duration-500 scale-100 mx-4 relative overflow-hidden";
+        icon.innerHTML = isPhish ? "🚨" : "❌";
+        title.innerHTML = isPhish ? "YOU GOT PHISHED!" : "False Alarm!";
+        title.className = "text-3xl font-black mb-4 tracking-tight text-red-700 drop-shadow-sm";
+        scoreChange.innerHTML = `<span class="text-red-800 bg-red-200/80 border border-red-400 px-5 py-2 rounded-xl inline-block shadow-sm">Score ${points}</span>`;
+        playAudio('error');
     }
 
-    sendResult(scenario.id, success);
+    message.innerHTML = `<strong>Analysis:</strong> ${explanation}`;
+
+    if (currentScenarioIndex >= scenarios.length - 1) {
+        nextBtn.classList.add('hidden');
+        finishBtn.classList.remove('hidden');
+    } else {
+        nextBtn.classList.remove('hidden');
+        finishBtn.classList.add('hidden');
+    }
 }
 
+function playAudio(type) {
+    try {
+        const sound = new Audio(`/static/${type}.mp3`);
+        sound.volume = 0.5;
+        sound.play().catch(e => console.log("Audio files not found. Add success.mp3 and error.mp3 to static folder."));
+    } catch (e) {}
+}
 
-// USER PRESSED REPORT BUTTON
-function reportEmail(){
-
+async function sendResult(id, success, pointsAwarded) {
     const scenario = scenarios[currentScenarioIndex];
-
-    let success = scenario.is_phish;
-
-    if(scenario.is_phish){
-        score += 100;
-        alert("✔ Correct phishing report (+100)");
-    }else{
-        score -= 20;
-        alert("❌ That email was safe (-20)");
-    }
-
-    sendResult(scenario.id, success);
-}
-
-
-// SEND TO BACKEND
-async function sendResult(id, success){
-
     document.getElementById("score").innerText = score;
 
-    // CHANGED THIS URL to bypass ad-blockers
     await fetch("/api/process-email",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            scenario_id:id,
-            success:success
-        })
+        body:JSON.stringify({ scenario_id: id, success: success })
     });
 
-    alert(scenarios[currentScenarioIndex].explanation);
+    let pointsStr = pointsAwarded > 0 ? `+${pointsAwarded}` : pointsAwarded;
+    showFeedbackOverlay(success, pointsStr, scenario.explanation, scenario.is_phish);
 }
 
+// User Actions
+function clickLink(scenario){
+    let success = !scenario.is_phish;
+    let pointsAwarded = scenario.is_phish ? -50 : 20;
+    score += pointsAwarded;
+    sendResult(scenario.id, success, pointsAwarded);
+}
 
-// NEXT EMAIL BUTTON
+function reportEmail(){
+    const scenario = scenarios[currentScenarioIndex];
+    let success = scenario.is_phish;
+    let pointsAwarded = scenario.is_phish ? 100 : -20; // Penalize false reports
+    score += pointsAwarded;
+    sendResult(scenario.id, success, pointsAwarded);
+}
+
+function markAsSafe(){
+    const scenario = scenarios[currentScenarioIndex];
+    let success = !scenario.is_phish;
+    let pointsAwarded = scenario.is_phish ? -50 : 20; // They approved a phish! Or correctly verified safe.
+    score += pointsAwarded;
+    sendResult(scenario.id, success, pointsAwarded);
+}
+
 function nextScenario(){
-
+    document.getElementById('feedback-overlay').classList.add('hidden');
     currentScenarioIndex++;
-
     if(currentScenarioIndex >= scenarios.length){
-        alert("Game finished!");
+        finishGame();
         return;
     }
-
     displayScenario(scenarios[currentScenarioIndex]);
 }
 
+function finishGame() {
+    window.location.href = "/profile";
+}
 
 window.onload = loadScenarios;
