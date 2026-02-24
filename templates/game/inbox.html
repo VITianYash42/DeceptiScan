@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div id="toast-container"
+     class="fixed bottom-6 left-1/2 -translate-x-1/2 flex flex-col gap-3 z-[9999]">
+</div>
+
 <div class="flex h-[calc(100vh-12rem)] min-h-[500px] bg-background/50 rounded-2xl shadow-[0_20px_50px_rgba(138,118,80,0.2)] border border-accent overflow-hidden mt-8 animate-slide-up backdrop-blur-md relative z-10">
     
     <div class="w-64 bg-accent/20 border-r border-accent p-6 hidden md:flex flex-col animate-slide-in-right relative overflow-hidden">
@@ -53,6 +57,7 @@
         </div>
     </div>
 </div>
-
 <script src="{{ url_for('static', filename='game.js') }}"></script>
+
 {% endblock %}
+
