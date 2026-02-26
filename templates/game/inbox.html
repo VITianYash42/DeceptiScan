@@ -21,6 +21,10 @@
             Compose
         </button>
         <div class="mt-auto absolute bottom-6 w-[calc(100%-3rem)] z-10">
+            <div id="streak-counter" class="hidden bg-orange-100 text-orange-600 font-extrabold text-sm py-1 px-4 rounded-full mb-2 mx-auto w-max shadow-sm border border-orange-300 animate-bounce">
+                🔥 Streak: x2
+            </div>
+            
             <div class="p-5 bg-primary rounded-xl border-2 border-secondary text-center shadow-inner transform transition hover:scale-105 duration-300">
                 <p class="text-xs text-accent uppercase tracking-widest font-bold mb-2">Training Score</p>
                 <p class="text-5xl font-extrabold text-background drop-shadow-md transition-all duration-500" id="score">0</p>
@@ -53,10 +57,9 @@
         </div>
 
         <div class="p-8 flex-1 overflow-y-auto text-primary/90 text-lg leading-relaxed bg-white/70 animate-fade-in" id="email-body" style="animation-delay: 0.4s; opacity: 0;">
-            </div>
+        </div>
     </div>
 </div>
 <script src="{{ url_for('static', filename='game.js') }}"></script>
 
 {% endblock %}
-

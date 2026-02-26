@@ -61,38 +61,57 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(219, 206, 165, 0.6);
         }
+        
         /* Pop up styles */
         @keyframes toast-in {
-        from {
-            opacity:0;
-            transform: translateY(40px) scale(.95);
-        }
-        to {
-            opacity:1;
-            transform: translateY(0) scale(1);
-        }
+            from { opacity:0; transform: translateY(40px) scale(.95); }
+            to { opacity:1; transform: translateY(0) scale(1); }
         }
 
         @keyframes toast-out {
-        from {
-            opacity:1;
-            transform: translateY(0);
-        }
-        to {
-            opacity:0;
-            transform: translateY(20px);
-        }
+            from { opacity:1; transform: translateY(0); }
+            to { opacity:0; transform: translateY(20px); }
         }
 
-        .animate-toast-in{
-        animation: toast-in .35s ease;
+        .animate-toast-in {
+            animation: toast-in .35s ease;
         }
 
-        .animate-toast-out{
-        animation: toast-out .3s ease forwards;
+        .animate-toast-out {
+            animation: toast-out .3s ease forwards;
         }
-            
 
+        /* 🚨 GLITCH EFFECT STYLES 🚨 */
+        @keyframes glitch-screen {
+            0% { filter: invert(1) hue-rotate(90deg); transform: translate(5px, 5px) skewX(5deg); }
+            20% { filter: invert(0) hue-rotate(0deg); transform: translate(-5px, -5px) skewX(-5deg); }
+            40% { filter: invert(1) hue-rotate(180deg); transform: translate(5px, -5px) skewX(10deg); }
+            60% { filter: invert(0) hue-rotate(0deg); transform: translate(-5px, 5px) skewX(-10deg); }
+            80% { filter: sepia(1) hue-rotate(-50deg) saturate(5); transform: translate(5px, 0px) skewX(5deg); }
+            100% { filter: invert(0) hue-rotate(0deg); transform: translate(0) skewX(0); }
+        }
+        
+        .glitch-active {
+            animation: glitch-screen 0.15s infinite;
+            pointer-events: none; /* Prevent clicking anything else during the glitch */
+            overflow: hidden;
+        }
+        
+        .glitch-active::after {
+            content: "SYSTEM COMPROMISED";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(220, 38, 38, 0.7);
+            z-index: 9999;
+            text-align: center;
+            line-height: 1;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
     </style>
 </head>
 <body class="bg-background min-h-screen flex flex-col font-sans text-primary transition-colors duration-500 overflow-x-hidden">

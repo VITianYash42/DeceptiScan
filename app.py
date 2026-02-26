@@ -64,8 +64,10 @@ def create_app():
             scenario_id = data.get('scenario_id')
             is_success = data.get('success')
             
-            # 1. Calculate points
-            points = 100 if is_success else -50
+            # ✅ ACCEPT POINTS FROM THE FRONTEND INSTEAD OF HARDCODING
+            points = data.get('points') 
+            if points is None: # Fallback just in case
+                points = 100 if is_success else -50
             
             # 2. Update the User's total score
             current_user.score += points
