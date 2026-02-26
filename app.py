@@ -39,6 +39,10 @@ def create_app():
         # Fetch the top 10 users sorted by score in descending order
         top_users = User.query.order_by(User.score.desc()).limit(10).all()
         return render_template('leaderboard.html', top_users=top_users)
+    
+    @app.route('/checklist')
+    def checklist():
+        return render_template('checklist.html')
 
     @app.route('/game')
     @login_required

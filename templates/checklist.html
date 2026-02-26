@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto mt-8 mb-16 animate-fade-in">
+    
+    <div class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-primary mb-4 tracking-tight">The Anti-Phishing Checklist</h1>
+        <p class="text-xl text-secondary max-w-2xl mx-auto">Master the 5 Golden Rules of social engineering defense. Memorize this checklist before you step into the simulation.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        
+        <div class="glass-panel p-8 rounded-2xl shadow-lg border-l-8 border-l-red-400 hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="text-4xl">📧</span>
+                <h3 class="text-2xl font-bold text-primary">1. Inspect the Sender Domain</h3>
+            </div>
+            <p class="text-lg text-primary/80 leading-relaxed">Hackers spoof display names. Always check the actual email address. Look for subtle typos like <strong>@paypa1.com</strong> instead of <strong>@paypal.com</strong> or weird domain extensions.</p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-2xl shadow-lg border-l-8 border-l-orange-400 hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="text-4xl">⏰</span>
+                <h3 class="text-2xl font-bold text-primary">2. Beware of Artificial Urgency</h3>
+            </div>
+            <p class="text-lg text-primary/80 leading-relaxed">Social engineering relies on panic. If an email threatens that your account will be "permanently locked in 24 hours" unless you click, it is almost certainly a trap. Stop and breathe.</p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-2xl shadow-lg border-l-8 border-l-yellow-500 hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="text-4xl">🖱️</span>
+                <h3 class="text-2xl font-bold text-primary">3. Hover Before You Click</h3>
+            </div>
+            <p class="text-lg text-primary/80 leading-relaxed">Never blindly trust a button that says "Login Here." Hover your mouse over the link without clicking. Your browser will display the true destination URL in the bottom-left corner.</p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-2xl shadow-lg border-l-8 border-l-blue-400 hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="text-4xl">📎</span>
+                <h3 class="text-2xl font-bold text-primary">4. Verify Unexpected Attachments</h3>
+            </div>
+            <p class="text-lg text-primary/80 leading-relaxed">Malware hides in attachments. If HR or IT sends an unexpected file—especially ending in <strong>.exe, .zip</strong>, or a macro-enabled <strong>.doc</strong>—contact the sender via Slack or phone to verify before downloading.</p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-2xl shadow-lg border-l-8 border-l-secondary md:col-span-2 md:w-2/3 md:mx-auto hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="text-4xl">🤖</span>
+                <h3 class="text-2xl font-bold text-primary">5. Spot Generic Greetings</h3>
+            </div>
+            <p class="text-lg text-primary/80 leading-relaxed">Legitimate companies you have accounts with know your name. Emails starting with "Dear Customer" or "Dear User" are massive red flags used in mass-phishing campaigns.</p>
+        </div>
+
+    </div>
+
+    <div class="text-center bg-primary text-background p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+        <div class="relative z-10">
+            <h2 class="text-3xl font-bold mb-4">Ready to test your instincts?</h2>
+            <p class="text-lg text-accent mb-8">Put this checklist to the test in our live, gamified environment.</p>
+            <a href="{{ url_for('game') }}" class="bg-background text-primary px-8 py-4 rounded-xl font-extrabold text-xl hover:bg-accent transition duration-300 shadow-[0_0_20px_rgba(236,231,209,0.3)] inline-block hover:-translate-y-1">
+                🎮 Start the Simulation
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
