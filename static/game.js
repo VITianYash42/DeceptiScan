@@ -103,9 +103,9 @@ function showFeedbackOverlay(isSuccess, points, explanation, isPhish) {
         scoreChange.innerHTML = `<span class="text-red-800 bg-red-200/80 border border-red-400 px-5 py-2 rounded-xl inline-block shadow-sm">Score ${points}</span>`;
         
         // Play audio only if it wasn't already triggered by the glitch
-        if(!document.body.classList.contains('glitch-active')) {
-            playAudio('error');
-        }
+        // if(!document.body.classList.contains('glitch-active')) {
+        //     playAudio('error');
+        // }
     }
 
     message.innerHTML = `<strong>Analysis:</strong> <br>${explanation}`;
@@ -134,10 +134,10 @@ async function sendResult(id, success, pointsAwarded, explanationStr) {
 
     if (!success) {
         // Trigger Glitch
+        
         document.body.classList.add('glitch-active');
-        playAudio('error'); 
-
         // Wait 1.2s, remove glitch, show feedback
+        playAudio('error'); 
         setTimeout(async () => {
             document.body.classList.remove('glitch-active');
             await saveAndShowFeedback(id, success, pointsAwarded, explanationStr, scenario);
