@@ -68,3 +68,35 @@ def profile():
     return render_template('auth/profile.html', 
                            successful_catches=successful_catches, 
                            failed_clicks=failed_clicks)
+
+
+# Add this to the bottom of auth.py
+
+@auth.route('/change-password', methods=['POST'])
+@login_required
+def change_password():
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+
+    if not check_password_hash(current_user.password_hash, current_password):
+        flash('Incorrect current password.', 'error')
+        return redirect(url_for('auth.profile'))
+
+    # Hash the new password and update
+    current_user.password_hash = generate_password_hash(new_password, method='pbkdf2:sha256')
+    db.session.commit()
+    flash('Password updated successfully.', 'success')
+    return redirect(url_for('auth.profile'))
+
+@auth.route('/reset-score', methods=['POST'])
+@login_required
+def reset_score():
+    # Reset the user's score
+    current_user.score = 0
+    
+    # Delete all previous attempts to clear the history
+    Attempt.query.filter_by(user_id=current_user.id).delete()
+    
+    db.session.commit()
+    flash('Score and history reset successfully.', 'success')
+    return redirect(url_for('auth.profile'))
